@@ -6,7 +6,7 @@ class dbQuery():
     
     #: Add the user into the database if not registered
     def setAccount(self, userId):
-        con = sqlite3.connect(self.db)
+        con = postgres.connect(self.db)
         cur = con.cursor()
 
         isRegistered = cur.execute(f'SELECT * FROM users WHERE userId={userId}').fetchone()
@@ -23,7 +23,7 @@ class dbQuery():
 
     #: Get all the registered users
     def getAllUsers(self):
-        con = sqlite3.connect(self.db)
+        con = postgres.connect(self.db)
         con.row_factory = lambda cursor, row: row[0]
         cur = con.cursor()
         
@@ -35,7 +35,7 @@ class dbQuery():
     #: Get the user's settings
     def getSetting(self, userId, var):
         self.setAccount(userId)
-        con = sqlite3.connect(self.db)
+        con = postgres.connect(self.db)
         cur = con.cursor()
         
         setting = cur.execute(f'SELECT {var} FROM settings WHERE ownerId={userId} limit 1').fetchone()
@@ -46,7 +46,7 @@ class dbQuery():
     #: Set the user's settings    
     def setSetting(self, userId, var, value):
         self.setAccount(userId)
-        con = sqlite3.connect(self.db)
+        con = postgres.connect(self.db)
         cur = con.cursor()
 
         #!? If value is None, put value as NULL else "{string}"
