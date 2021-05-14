@@ -1,4 +1,4 @@
-import sqlite3
+import postgres
 
 class dbQuery():
     def __init__(self, db):
@@ -53,4 +53,3 @@ class dbQuery():
         value = f'"{value}"' if value else 'NULL'
         cur.execute(f'INSERT OR IGNORE INTO settings (ownerId, {var}) VALUES ({userId}, {value})')
         cur.execute(f'UPDATE settings SET {var}={value} WHERE ownerId={userId}')
-        con.commit()
